@@ -1,0 +1,11 @@
+{
+  "require": {
+    "league/route": "1.0.*@dev",
+    "katzgrau/klogger": "1.0.*"
+  },
+  "autoload": {
+    "classmap": [
+      "src/controllers/"
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+*.iml
+.idea/
+### Vagrant template
+.vagrant/
+### Composer template
+vendor/
