@@ -23,6 +23,7 @@ $router->get('/result', function (Request $request, Response $response) use ($tw
     $login = $_GET['login'];
     $template = $twig->loadTemplate('result.php');
     $info = new Main($login);
+    //var_dump($info->usersFeed);
     echo $template->render(['info' => $info->usersFeed]);
     return $response;
 });

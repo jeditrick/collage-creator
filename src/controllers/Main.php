@@ -5,7 +5,6 @@ use SSX\EpiTwitter;
 
 class Main
 {
-    const YEAR = 2014;
     public $usersFeed;
     private $screenName;
     private $connection;
@@ -28,41 +27,40 @@ class Main
             'D5vKZHjtKJjJJaVg5UCCJVqUwdgGmF3gsl4dtWaKIoAnQ'
 
         );
-
         return $twitterObj;
     }
 
 
     public function getFriendsIds()
     {
-        //$this->connection->useAsynchronous(true);
         $this->connection->setDebug(true);
         $cursor = -1;
         $ids = [];
-        do{
+        do {
             $content = $this->connection->get_friendsIds(['screen_name' => $this->screenName, 'cursor' => $cursor]);
             $ids[] = $content->ids;
             $cursor = $content->response['next_cursor'];
-        }while($cursor != 0);
-        return $ids;
+        } while ($cursor != 0);
+        return $ids[0];
     }
 
     public function getResultFeed()
     {
         $feed = [];
         $ids = $this->getFriendsIds();
-        //$this->connection->useAsynchronous(true);
-        foreach (array_chunk($ids,100) as $k=>$id_arr) {
-            $content = $this->connection->get_usersLookup(['user_id' => implode(',',$id_arr[$k]), 'include_entities' => false]);
-            foreach($content->response as $info){
+        $this->connection->useAsynchronous(true);
+        foreach (array_chunk($ids, 100) as $k => $id_arr) {
+            $content = $this->connection->get_usersLookup([
+                'user_id' => implode(',', $id_arr),
+                'include_entities' => false
+            ]);
+            foreach ($content->response as $info) {
                 $feed[$info['id']]['info'] = [
                     'statuses_count' => $info['statuses_count'],
                     'name' => $info['name'],
                     'profile_image_url' => str_replace('_normal', '', $info['profile_image_url'])
                 ];
             }
-
-
         }
         return $feed;
     }

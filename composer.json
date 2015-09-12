@@ -1,9 +1,6 @@
 {
   "require": {
     "league/route": "1.0.*@dev",
-    "guzzlehttp/guzzle": "~5.0",
-    "katzgrau/klogger": "1.0.*",
-    "abraham/twitteroauth": "^0.6.0",
     "ssx/twitter-async": "dev-master",
     "twig/twig": "~1.0"
   },
