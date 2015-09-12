@@ -33,12 +33,6 @@ class Main
         );
 
         return $twitterObj;
-        /*return new TwitterOAuth(
-            'evr67AA0V4HeSUUV2Dv7mEvYM',
-            'D6vpri9UaV5463Yn1a79hZQTWs5tKEUK5gJ9QPsgAGLZq6QeWl',
-            '3625264097-yeZIh5jfBjzayNAne98AsVyozIiSDniJw810m4b',
-            'D5vKZHjtKJjJJaVg5UCCJVqUwdgGmF3gsl4dtWaKIoAnQ'
-        );*/
     }
 
 
@@ -65,6 +59,8 @@ class Main
 
     public function getUserFeed($id)
     {
+        $this->connection->useAsynchronous(true);
+        $this->connection->setDebug(true);
         $page = 1;
         $feed['count'] = 0;
 
@@ -72,10 +68,11 @@ class Main
             $twits = $this->connection->get_statusesUser_timeline(
                 ['user_id' => $id, 'count' => 200, 'page' => $page++]
             );
-            if (count($twits) < 1) {
+            if ($twits->response == null || count($twits->response) < 1) {
+                $k=0;
                 break;
             } else {
-                $feed['count'] += count($twits);
+                $feed['count'] += count($twits->response);
             }
         }
         return $feed;
