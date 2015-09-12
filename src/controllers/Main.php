@@ -7,19 +7,17 @@ use SSX\EpiTwitter;
 class Main
 {
     const YEAR = 2014;
-    private $usersFeed;
+    public $usersFeed;
     private $screenName;
     private $connection;
 
     public function __construct($screen_name)
     {
-
         $this->screenName = $screen_name;
         $this->usersFeed = [];
         $this->connection = $this->makeConnection();
         $this->usersFeed = $this->getResultFeed();
-        var_dump($this->usersFeed);
-
+        return $this->usersFeed;
     }
 
     public function makeConnection()
@@ -43,37 +41,17 @@ class Main
 
     public function getResultFeed()
     {
+
         $feed = [];
-        foreach ($this->getFriendsIds() as $id) {
-            $feed[$id] = $this->getUserFeed($id);
-            $feed[$id]['info'] = $this->getUserInfo($id);
-        }
-        return $feed;
-    }
-
-    public function getUserInfo($id)
-    {
-        $info = $this->connection->get_usersShow(['user_id' => $id, 'include_entities' => false]);
-        return ['name' => $info->name, 'profile_image_url' => $info->profile_image_url];
-    }
-
-    public function getUserFeed($id)
-    {
+        $users = $this->getFriendsIds();
         $this->connection->useAsynchronous(true);
-        $this->connection->setDebug(true);
-        $page = 1;
-        $feed['count'] = 0;
-
-        while ($page < 6) {
-            $twits = $this->connection->get_statusesUser_timeline(
-                ['user_id' => $id, 'count' => 200, 'page' => $page++]
-            );
-            if ($twits->response == null || count($twits->response) < 1) {
-                $k=0;
-                break;
-            } else {
-                $feed['count'] += count($twits->response);
-            }
+        foreach ($users as $id) {
+            $info = $this->connection->get_usersShow(['user_id' => $id, 'include_entities' => false]);
+            $feed[$id]['info'] = [
+                'statuses_count' => $info->statuses_count,
+                'name' => $info->name,
+                'profile_image_url' => str_replace('_normal', '', $info->profile_image_url)
+            ];
         }
         return $feed;
     }
