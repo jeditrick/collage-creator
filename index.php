@@ -6,11 +6,12 @@ use Symfony\Component\HttpFoundation\Request,
     Home\Main;
 
 ini_set('memory_limit', '200M');
+ini_set('display_errors', 'On');
 $router = new League\Route\RouteCollection;
 
 
 $router->get('/', function (Request $request, Response $response) {
-    new Main('telegram');
+    new Main('byteUA');
     return $response;
 });
 

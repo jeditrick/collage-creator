@@ -2,55 +2,82 @@
 namespace Home;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
+use SSX\EpiTwitter;
 
 class Main
 {
-    private $users;
+    const YEAR = 2014;
+    private $usersFeed;
     private $screenName;
+    private $connection;
 
     public function __construct($screen_name)
     {
+
         $this->screenName = $screen_name;
-        $this->users = [];
-        $this->Foo();
+        $this->usersFeed = [];
+        $this->connection = $this->makeConnection();
+        $this->usersFeed = $this->getResultFeed();
+        var_dump($this->usersFeed);
+
     }
 
-    public function Foo()
+    public function makeConnection()
     {
-        $page = 1;
-        $connection = new TwitterOAuth(
+        $twitterObj = new EpiTwitter(
             'evr67AA0V4HeSUUV2Dv7mEvYM',
             'D6vpri9UaV5463Yn1a79hZQTWs5tKEUK5gJ9QPsgAGLZq6QeWl',
             '3625264097-yeZIh5jfBjzayNAne98AsVyozIiSDniJw810m4b',
             'D5vKZHjtKJjJJaVg5UCCJVqUwdgGmF3gsl4dtWaKIoAnQ'
+
         );
 
-        do {
-            $content = $connection->get("statuses/user_timeline",
-                ['screen_name' => $this->screenName, 'count' => 200, 'page' => $page++, 'exclude_replies' => true]);
-            foreach ($content as $twit) {
-                if ($twit->retweeted_status != null) {
-                    $nested_user = $twit->retweeted_status->user;
-                } else {
-                    $nested_user = $twit->user;
-                }
+        return $twitterObj;
+        /*return new TwitterOAuth(
+            'evr67AA0V4HeSUUV2Dv7mEvYM',
+            'D6vpri9UaV5463Yn1a79hZQTWs5tKEUK5gJ9QPsgAGLZq6QeWl',
+            '3625264097-yeZIh5jfBjzayNAne98AsVyozIiSDniJw810m4b',
+            'D5vKZHjtKJjJJaVg5UCCJVqUwdgGmF3gsl4dtWaKIoAnQ'
+        );*/
+    }
 
-                if ($this->users[$nested_user->id] == null) {
-                    $this->users[$nested_user->id] = [
-                        'screen_name' => $nested_user->screen_name,
-                        'name' => $nested_user->name,
-                        'avatar' => $nested_user->profile_image_url,
-                        'count' => 0
-                    ];
-                }
-                $this->users[$nested_user->id]['count'] += 1;
 
+    public function getFriendsIds()
+    {
+        return $this->connection->get_friendsIds(['screen_name' => $this->screenName])->ids;
+    }
+
+    public function getResultFeed()
+    {
+        $feed = [];
+        foreach ($this->getFriendsIds() as $id) {
+            $feed[$id] = $this->getUserFeed($id);
+            $feed[$id]['info'] = $this->getUserInfo($id);
+        }
+        return $feed;
+    }
+
+    public function getUserInfo($id)
+    {
+        $info = $this->connection->get_usersShow(['user_id' => $id, 'include_entities' => false]);
+        return ['name' => $info->name, 'profile_image_url' => $info->profile_image_url];
+    }
+
+    public function getUserFeed($id)
+    {
+        $page = 1;
+        $feed['count'] = 0;
+
+        while ($page < 6) {
+            $twits = $this->connection->get_statusesUser_timeline(
+                ['user_id' => $id, 'count' => 200, 'page' => $page++]
+            );
+            if (count($twits) < 1) {
+                break;
+            } else {
+                $feed['count'] += count($twits);
             }
-            if (count($content) < 1) {
-                var_dump($page);
-            }
-
-        } while (100 > $page);
-        var_dump($this->users);
+        }
+        return $feed;
     }
 }

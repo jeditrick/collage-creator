@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d5e385fed57cf94212b5ab0402d6751c",
+    "hash": "f149337463aaf349b9ab57a7b2c7f37d",
     "packages": [
         {
             "name": "abraham/twitteroauth",
@@ -513,6 +513,48 @@
             "time": "2015-07-03 13:48:55"
         },
         {
+            "name": "ssx/twitter-async",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ssx/twitter-async.git",
+                "reference": "0c09353552c05ccfb0c294f251f2ba84386f14c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ssx/twitter-async/zipball/0c09353552c05ccfb0c294f251f2ba84386f14c7",
+                "reference": "0c09353552c05ccfb0c294f251f2ba84386f14c7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Jaisen Mathai",
+                    "email": "jaisen@jmathai.com"
+                },
+                {
+                    "name": "Scott Wilcox",
+                    "email": "scott@dor.ky",
+                    "homepage": "http://dor.ky"
+                }
+            ],
+            "description": "Twitter-async is a high performance wrapper for Twitter's OAuth API which provides parallel/asynchronous calls.",
+            "homepage": "http://www.jaisenmathai.com/articles/twitter-async-documentation.html",
+            "time": "2013-10-19 18:16:47"
+        },
+        {
             "name": "symfony/http-foundation",
             "version": "v2.7.4",
             "source": {
@@ -570,7 +612,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "league/route": 20
+        "league/route": 20,
+        "ssx/twitter-async": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
