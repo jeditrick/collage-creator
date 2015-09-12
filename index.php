@@ -10,15 +10,9 @@ $router = new League\Route\RouteCollection;
 
 
 $router->get('/', function (Request $request, Response $response) {
-    new Main();
+    new Main('telegram');
     return $response;
 });
-
-$router->get('/route', function (Request $request, Response $response) {
-    echo "router";
-    return $response;
-});
-
 
 
 $dispatcher = $router->getDispatcher();
