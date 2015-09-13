@@ -24,10 +24,10 @@ class Main
     public function makeConnection()
     {
         $twitterObj = new EpiTwitter(
-            'evr67AA0V4HeSUUV2Dv7mEvYM',
-            'D6vpri9UaV5463Yn1a79hZQTWs5tKEUK5gJ9QPsgAGLZq6QeWl',
-            '3625264097-yeZIh5jfBjzayNAne98AsVyozIiSDniJw810m4b',
-            'D5vKZHjtKJjJJaVg5UCCJVqUwdgGmF3gsl4dtWaKIoAnQ'
+            CONSUMER_KEY,
+            CONSUMER_SECRET,
+            OAUTH_TOKEN,
+            OAUTH_TOKEN_SECRET
 
         );
         return $twitterObj;

@@ -1,14 +1,16 @@
 <?php
 
 require "vendor/autoload.php";
+require 'cfg.php';
+
 use Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpFoundation\Response,
     Home\Main;
 
 ini_set('memory_limit', '200M');
 ini_set('display_errors', 'On');
-$router = new League\Route\RouteCollection;
 
+$router = new League\Route\RouteCollection;
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('src/views');
 $twig = new Twig_Environment($loader);
@@ -30,8 +32,8 @@ $router->get('/result', function (Request $request, Response $response) use ($tw
         $info = new Main($login);
         if(count($info->usersFeed)){
             shuffle($info->usersFeed);
-            echo $template->render(['info' => $info->usersFeed, 'size' => $size]);
-            //var_dump($info->usersFeed,$info->tweetsCount);
+            //echo $template->render(['info' => $info->usersFeed, 'size' => $size]);
+            var_dump($info->usersFeed,$info->tweetsCount);
         }else{
             echo '<h1>Empty User</h1><br/><a href="/uwc8">Go back</a>';
         }
