@@ -8,13 +8,16 @@ class Main
     public $usersFeed;
     private $screenName;
     private $connection;
+    public $tweetsCount;
 
     public function __construct($screen_name)
     {
         $this->screenName = $screen_name;
         $this->usersFeed = [];
+        $this->tweetsCount = 0;
         $this->connection = $this->makeConnection();
         $this->usersFeed = $this->getResultFeed();
+        $this->setSize();
         return $this->usersFeed;
     }
 
@@ -56,12 +59,21 @@ class Main
             ]);
             foreach ($content->response as $info) {
                 $feed[$info['id']]['info'] = [
-                    'statuses_count' => $info['statuses_count'],
+                    'statuses_count' => $info['statuses_count']+1,
                     'name' => $info['name'],
                     'profile_image_url' => str_replace('_normal', '', $info['profile_image_url'])
                 ];
+                $this->tweetsCount += $info['statuses_count'];
             }
         }
+
         return $feed;
     }
+
+    public function setSize(){
+        foreach($this->usersFeed as $k => $el){
+            $this->usersFeed[$k]['info']['size'] = ($el['info']['statuses_count']*100)/$this->tweetsCount;
+        }
+    }
+
 }
