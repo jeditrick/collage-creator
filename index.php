@@ -20,8 +20,8 @@ $app->get('/', function () use ($twig) {
 });
 
 $app->post('/result', function () use ($twig, $app) {
-    $login = $app->request->get('login');
-    $size = $app->request->get('size');
+    $login = $app->request->post('login');
+    $size = $app->request->post('size');
     if (in_array($size, [null, '', 0])) {
         $size = DEFAULT_SIZE;
     }
