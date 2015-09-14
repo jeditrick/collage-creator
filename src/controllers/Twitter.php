@@ -40,7 +40,7 @@ class Twitter
         $cursor = -1;
         $ids = [];
         do {
-            $content = $this->connection->get_friendsIds(['screen_name' => $this->screenName, 'cursor' => $cursor]);
+            $content = $this->connection->get('/friends/ids.json',['screen_name' => $this->screenName, 'cursor' => $cursor]);
             $ids[] = $content->ids;
             $cursor = $content->response['next_cursor'];
         } while ($cursor != 0);
@@ -53,7 +53,7 @@ class Twitter
         $ids = $this->getFriendsIds();
         $this->connection->useAsynchronous(true);
         foreach (array_chunk($ids, 100) as $k => $id_arr) {
-            $content = $this->connection->get_usersLookup([
+            $content = $this->connection->get('/users/lookup.json',[
                 'user_id' => implode(',', $id_arr),
                 'include_entities' => false
             ]);
