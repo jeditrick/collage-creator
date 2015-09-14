@@ -12,7 +12,7 @@
          src="{{item['info']['profile_image_url']}}" alt="">
     {% endfor %}
 </div>
-<script src="/uwc8/resources/js/main.js"></script>
+<script src="/resources/js/main.js"></script>
 {% else %}
 <h1>User is empty</h1>
 <br/><a href="/uwc8">Go back</a>
