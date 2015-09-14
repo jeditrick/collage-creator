@@ -1,4 +1,4 @@
-$(window).load(
+$(window).load (
     function(){
         html2canvas(document.getElementById('result'), {
             onrendered: function (canvas) {
@@ -6,7 +6,6 @@ $(window).load(
             },
             allowTaint: true,
             taintTest: false,
-            logging: true,
             async: false
         });
     }

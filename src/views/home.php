@@ -1,10 +1,10 @@
 {% extends "base.php" %}
 {% block content %}
 <div >
-    <form action="result" method="get">
+    <form action="result" method="post">
         <label for="login">Enter login : </label>
         <br>
-        <input type="text" id="login" name="login">
+        <input required type="text" id="login" name="login">
         <br>
         <label for="size">Enter size : </label>
         <br>

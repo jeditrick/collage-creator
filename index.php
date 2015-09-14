@@ -19,11 +19,11 @@ $app->get('/', function () use ($twig) {
     echo $template->render([]);
 });
 
-$app->get('/result', function () use ($twig, $app) {
+$app->post('/result', function () use ($twig, $app) {
     $login = $app->request->get('login');
     $size = $app->request->get('size');
     if (in_array($size, [null, '', 0])) {
-        $size = 600;
+        $size = DEFAULT_SIZE;
     }
     try {
         $template = $twig->loadTemplate('result.php');
