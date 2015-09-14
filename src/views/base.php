@@ -2,9 +2,9 @@
 <html>
 <head>
     <title>UWC8</title>
-    <link rel="stylesheet" href="/uwc8/resources/css/style.css">
+    <link rel="stylesheet" href="/resources/css/style.css">
     <script src = "//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="/uwc8/resources/js/html2canvas.js"></script>
+    <script src="/resources/js/html2canvas.js"></script>
 </head>
 <body>
 <div id = "content" style="width: {{size}}px; height: {{size}}px;">
