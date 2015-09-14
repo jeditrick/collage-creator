@@ -1,23 +1,27 @@
-body *{
+
+*{
     font-family: "Arial Black", Arial, Tahoma, sans-serif,serif;
 }
 
-.main{
+#content{
     text-align: center;
-    margin-top: 12%;
+    margin: 2% auto;
+}
+#result{
+    background: rgba(0,0,0,0.2);
 }
 input{
     margin: 15px;
 
 }
-#url{
+input{
     width: 300px;
     padding: 5px;
     font-size: 16px;
     border: 0;
     border-bottom: 2px solid black;
 }
-#url:focus{
+input:focus{
     outline: 0;
 }
 [type="submit"]{
