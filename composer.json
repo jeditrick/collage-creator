@@ -10,5 +10,8 @@
       "src/controllers/",
       "src/views/"
     ]
+  },
+  "require-dev": {
+    "heroku/heroku-buildpack-php": "*"
   }
 }
