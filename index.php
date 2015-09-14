@@ -3,7 +3,7 @@
 require "vendor/autoload.php";
 require 'cfg.php';
 
-use Home\Main;
+use Home\Twitter;
 
 ini_set('memory_limit', '200M');
 ini_set('display_errors', 'On');
@@ -14,36 +14,28 @@ $loader = new Twig_Loader_Filesystem('src/views');
 $twig = new Twig_Environment($loader);
 
 
-$app->get('/', function () use ($twig){
+$app->get('/', function () use ($twig) {
     $template = $twig->loadTemplate('home.php');
     echo $template->render([]);
 });
 
-$app->get('/result', function () use ($twig){
-    $login = $_GET['login'];
-
-    if(!isset($_GET['size']) || $_GET['size'] == '' || $_GET['size'] == 0){
-        $size = 800;
-    }else{
-        $size = $_GET['size'];
+$app->get('/result', function () use ($twig, $app) {
+    $login = $app->request->get('login');
+    $size = $app->request->get('size');
+    if (in_array($size, [null, '', 0])) {
+        $size = 600;
     }
-    $template = $twig->loadTemplate('result.php');
-    try{
-        $info = new Main($login);
-        if(count($info->usersFeed)){
+    try {
+        $template = $twig->loadTemplate('result.php');
+        $info = new Twitter($login);
+        $empty = (count($info->usersFeed) == 0);
+        if (!$empty) {
             shuffle($info->usersFeed);
-            echo $template->render(['info' => $info->usersFeed, 'size' => $size]);
-            //var_dump($info->usersFeed,$info->tweetsCount);
-        }else{
-            echo '<h1>Empty User</h1><br/><a href="/uwc8">Go back</a>';
         }
-
-    }catch (SSX\EpiTwitterException $e){
-        if($e->getCode() == 404){
-            echo '<h1>There is no info about this user ! Does he exist ????</h1><br/><a href="/uwc8">Go back</a>';
-        }elseif($e->getCode() == 429){
-            echo '<h1>Rate limit exceeded!!! Please try again later</h1><br/><a href="/uwc8">Go back</a>';
-        }
+        echo $template->render(['info' => $info->usersFeed, 'size' => $size, 'empty' => $empty]);
+    } catch (SSX\EpiTwitterException $e) {
+        $template = $twig->loadTemplate('error.php');
+        echo $template->render(['error_code' => $e->getCode()]);
     }
 });
 $app->run();

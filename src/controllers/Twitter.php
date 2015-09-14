@@ -3,7 +3,7 @@ namespace Home;
 
 use SSX\EpiTwitter;
 
-class Main
+class Twitter
 {
     public $usersFeed;
     private $screenName;
