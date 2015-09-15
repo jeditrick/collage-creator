@@ -23,7 +23,7 @@ $app->post('/result', function () use ($twig, $app) {
     $login = $app->request->post('login');
     $size = $app->request->post('size');
     $go_back = $_SERVER['HTTP_REFERER'];
-    if (in_array($size, [null, '', 0])) {
+    if (in_array($size, [null, '']) || $size < 1) {
         $size = DEFAULT_SIZE;
     }
     try {
