@@ -22,6 +22,7 @@ $app->get('/', function () use ($twig) {
 $app->post('/result', function () use ($twig, $app) {
     $login = $app->request->post('login');
     $size = $app->request->post('size');
+    $go_back = $_SERVER['HTTP_REFERER'];
     if (in_array($size, [null, '', 0])) {
         $size = DEFAULT_SIZE;
     }
@@ -35,11 +36,12 @@ $app->post('/result', function () use ($twig, $app) {
         echo $template->render([
             'info' => $info->getUsersFeed(),
             'size' => $size,
-            'empty' => $empty
+            'empty' => $empty,
+            'go_back' => $go_back
         ]);
     } catch (SSX\EpiTwitterException $e) {
         $template = $twig->loadTemplate('error.php');
-        echo $template->render(['error_code' => $e->getCode(), 'go_back' => $_SERVER['HTTP_REFERER']]);
+        echo $template->render(['error_code' => $e->getCode(), 'go_back' => $go_back]);
     }
 });
 $app->run();
