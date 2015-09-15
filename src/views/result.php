@@ -1,6 +1,5 @@
 {% extends "base.php" %}
 {% block content %}
-<a href="{{go_back}}">Go back</a>
 {% if not empty %}
 <ul style="text-align: left">
     <li>Right mouse click on collage</li>
