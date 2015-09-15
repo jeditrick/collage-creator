@@ -3,8 +3,7 @@
     "php": "~5.5.12",
     "ssx/twitter-async": "dev-master",
     "twig/twig": "~1.0",
-    "slim/slim": "^2.6",
-    "katzgrau/klogger": "dev-master"
+    "slim/slim": "^2.6"
   },
   "autoload": {
     "classmap": [
