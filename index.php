@@ -28,11 +28,11 @@ $app->post('/result', function () use ($twig, $app) {
     try {
         $template = $twig->loadTemplate('result.php');
         $info = new Twitter($login);
-        $empty = (count($info->usersFeed) == 0);
+        $empty = (count($info->getUsersFeed()) == 0);
         if (!$empty) {
-            shuffle($info->usersFeed);
+            shuffle($info->getUsersFeed());
         }
-        echo $template->render(['info' => $info->usersFeed, 'size' => $size, 'empty' => $empty]);
+        echo $template->render(['info' => $info->getUsersFeed(), 'size' => $size, 'empty' => $empty]);
     } catch (SSX\EpiTwitterException $e) {
         $template = $twig->loadTemplate('error.php');
         echo $template->render(['error_code' => $e->getCode(), 'go_back' => $_SERVER['HTTP_REFERER']]);

@@ -38,9 +38,8 @@ if (typeof(document) === "undefined" || typeof(Object.create) !== "function" || 
 }
 
 /*! https://mths.be/punycode v1.3.1 by @mathias */
-;(function(root) {
-
-	/** Detect free variables */
+	(function (root) {
+		/** Detect free variables */
 	var freeExports = typeof exports == 'object' && exports &&
 		!exports.nodeType && exports;
 	var freeModule = typeof module == 'object' && module &&
