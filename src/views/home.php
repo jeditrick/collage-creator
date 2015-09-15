@@ -8,7 +8,7 @@
         <br>
         <label for="size">Enter size : </label>
         <br>
-        <input type="number" id="size" name="size">
+        <input type="number" min="0" id="size" name="size">
         <br>
         <input type="submit" value="Send">
     </form>
