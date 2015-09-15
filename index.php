@@ -35,7 +35,7 @@ $app->post('/result', function () use ($twig, $app) {
         echo $template->render(['info' => $info->usersFeed, 'size' => $size, 'empty' => $empty]);
     } catch (SSX\EpiTwitterException $e) {
         $template = $twig->loadTemplate('error.php');
-        echo $template->render(['error_code' => $e->getCode()]);
+        echo $template->render(['error_code' => $e->getCode(), 'go_back' => $_SERVER['HTTP_REFERER']]);
     }
 });
 $app->run();
