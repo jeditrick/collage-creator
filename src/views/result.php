@@ -1,6 +1,6 @@
 {% extends "base.php" %}
 {% block content %}
-{{empty}}
+<a href="{{go_back}}">Go back</a>
 {% if not empty %}
 <ul style="text-align: left">
     <li>Right mouse click on collage</li>
@@ -15,6 +15,5 @@
 <script src="resources/js/main.js"></script>
 {% else %}
 <h1>User is empty</h1>
-<br/><a href="/uwc8">Go back</a>
 {% endif %}
 {% endblock %}

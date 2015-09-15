@@ -35,3 +35,7 @@ input:focus{
 
     color: gray;
 }
+
+a{
+    text-decoration: none;
+}

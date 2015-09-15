@@ -32,7 +32,12 @@ $app->post('/result', function () use ($twig, $app) {
         if (!$empty) {
             shuffle($info->getUsersFeed());
         }
-        echo $template->render(['info' => $info->getUsersFeed(), 'size' => $size, 'empty' => $empty]);
+        echo $template->render([
+            'info' => $info->getUsersFeed(),
+            'size' => $size,
+            'empty' => $empty,
+            'go_back' => $_SERVER['HTTP_REFERER']
+        ]);
     } catch (SSX\EpiTwitterException $e) {
         $template = $twig->loadTemplate('error.php');
         echo $template->render(['error_code' => $e->getCode(), 'go_back' => $_SERVER['HTTP_REFERER']]);
